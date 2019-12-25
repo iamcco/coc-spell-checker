@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "strictNullChecks": true,
+    "strict": true,
+    "strictFunctionTypes": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "out",
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false,
+    "rootDir": "src"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "./out"
+  ]
+}
