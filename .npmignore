@@ -1,0 +1,8 @@
+server/*.d.ts
+server/*.js.map
+src/
+yarn.lock
+webpack.config.js
+tslint.json
+tsconfig.json
+node_modules/

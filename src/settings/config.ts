@@ -162,7 +162,7 @@ export function setSettingInVSConfig<K extends keyof CSpellUserSettings>(
     const section = getSectionName(subSection);
     const config = getConfiguration(uri);
     updateCachedSettings(configTarget, subSection, value);
-    return config.update(section, value, !!target);
+    return config.update(section, value, target === Target.Global);
 }
 
 export function inspectConfig(
@@ -170,14 +170,14 @@ export function inspectConfig(
 ): Inspect<CSpellUserSettings> {
     const config = getConfiguration(resource);
     const settings = config.inspect<CSpellUserSettings>(sectionCSpell) || { key: '' };
-    const { defaultValue = {}, globalValue = {}, workspaceValue = {}, /* workspaceFolderValue = {},*/ key } = settings;
+    const { defaultValue = {}, globalValue = {}, workspaceValue = {}, key } = settings;
 
     return {
         key,
         defaultValue,
         globalValue: {...globalValue, ...getFolderSettingsForScope(Scopes.Global)},
         workspaceValue: {...workspaceValue, ...getFolderSettingsForScope(Scopes.Workspace)},
-        workspaceFolderValue: { /*...workspaceFolderValue,*/ ...getFolderSettingsForScope({ scope: Scopes.Folder, resource })},
+        workspaceFolderValue: { ...getFolderSettingsForScope({ scope: Scopes.Folder, resource })},
     };
 }
 

@@ -6,5 +6,4 @@ node_modules
 temp
 *.vsix
 *.cpuprofile
-server/*.d.ts
 server/*.js.map
