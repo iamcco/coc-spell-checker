@@ -51,15 +51,25 @@ display the list of suggestions:
 
 ## Add-On Dictionaries
 
-- [Dutch](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-dutch)
-- [Catalan](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-catalan)
-- [Czech](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-czech)
-- [French](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-french)
-- [German](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-german)
-- [Russian](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-russian)
-- [Spanish](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-spanish)
-- [Swedish](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-swedish)
-- [Medical Terms](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker-medical-terms)
+- [catalan](https://github.com/iamcco/coc-cspell-dicts)
+- [czech](https://github.com/iamcco/coc-cspell-dicts)
+- [danish](https://github.com/iamcco/coc-cspell-dicts)
+- [dutch](https://github.com/iamcco/coc-cspell-dicts)
+- [french](https://github.com/iamcco/coc-cspell-dicts)
+- [french-reforme](https://github.com/iamcco/coc-cspell-dicts)
+- [german](https://github.com/iamcco/coc-cspell-dicts)
+- [greek](https://github.com/iamcco/coc-cspell-dicts)
+- [italian](https://github.com/iamcco/coc-cspell-dicts)
+- [persian](https://github.com/iamcco/coc-cspell-dicts)
+- [polish](https://github.com/iamcco/coc-cspell-dicts)
+- [portuguese](https://github.com/iamcco/coc-cspell-dicts)
+- [portuguese-brazilian](https://github.com/iamcco/coc-cspell-dicts)
+- [russian](https://github.com/iamcco/coc-cspell-dicts)
+- [spanish](https://github.com/iamcco/coc-cspell-dicts)
+- [swedish](https://github.com/iamcco/coc-cspell-dicts)
+- [turkish](https://github.com/iamcco/coc-cspell-dicts)
+- [ukrainian](https://github.com/iamcco/coc-cspell-dicts)
+- [medical-terms](https://github.com/iamcco/coc-cspell-dicts)
 
 ## Enabled File Types
 

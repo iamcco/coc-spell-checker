@@ -160,11 +160,16 @@ export function userCommandOnCurrentSelectionOrPrompt(
   return async function () {
     const document = await coc.workspace.document;
     const mode = await coc.workspace.nvim.call('visualmode') as string;
-    const range = await coc.workspace.getSelectedRange(mode, document);
-    const value = range ? document.textDocument.getText(range) : '';
+    let range = await coc.workspace.getSelectedRange(mode, document);
+    let value = range ? document.textDocument.getText(range) : '';
     if (range && !(range.start.line !== range.end.line || range.start.character !== range.end.character)) {
       fnAction(value, coc.Uri.parse(document.textDocument.uri));
     } else {
+      const position = await coc.workspace.getCursorPosition();
+      if (position && document && document.textDocument) {
+        range = document.getWordRangeAtPosition(position);
+        value = range ? document.textDocument.getText(range) : '';
+      }
       const word = await coc.workspace.requestInput(prompt, value);
       word && fnAction(word, coc.Uri.parse(document.textDocument.uri));
     }
