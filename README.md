@@ -34,6 +34,10 @@ display the list of suggestions:
 - `<leader>aap` for current paragraph
 - `<leader>aw` for current word
 
+Or use the [coc-actions](https://github.com/iamcco/coc-actions)
+
+![image](https://user-images.githubusercontent.com/5492542/71774253-78717700-2fa6-11ea-9629-1e88d0b5114e.png)
+
 ## Install
 
 `:CocInstall coc-spell-checker`
