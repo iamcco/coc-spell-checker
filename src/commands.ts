@@ -49,8 +49,12 @@ async function attemptRename(document: TextDocument, range: Range, text: string)
   if (!wordRange || !rangeContain(wordRange, range)) {
     return false;
   }
-  const prepareRename = await coc.languages.prepareRename(document, range.start);
-  if (prepareRename === false) {
+  try {
+    const prepareRename = await coc.languages.prepareRename(document, range.start);
+    if (prepareRename === false) {
+      return false;
+    }
+  } catch (error) {
     return false;
   }
   const orig = wordRange.start.character;
