@@ -970,6 +970,13 @@ cspell-dict-typescript@^1.0.3:
   dependencies:
     configstore "^5.0.0"
 
+cspell-dict-vimlang@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cspell-dict-vimlang/-/cspell-dict-vimlang-1.0.1.tgz#52f4b6c270a0e4c94021d616e61da34d4ef79174"
+  integrity sha512-pP2W2BvLrRKggS1fUk8qQw2FG8PhyV969dlwF3M0jAg/HH83n76H+KGdzGsmEut6VJFlJYQkd1ZZskjaeVWnrA==
+  dependencies:
+    configstore "^5.0.0"
+
 cspell-glob@^0.1.12:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/cspell-glob/-/cspell-glob-0.1.13.tgz#9e52d21eb13d89b250f84c759931ebe6ff310071"

@@ -13,6 +13,7 @@ module.exports = {
   },
   externals: {
     'coc.nvim': 'commonjs coc.nvim',
+    'cspell-dict-vimlang': 'commonjs cspell-dict-vimlang',
   },
   module: {
     rules: [

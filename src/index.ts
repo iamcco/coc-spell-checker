@@ -7,6 +7,7 @@ import { initStatusBar } from './statusbar';
 import {userCommandOnCurrentSelectionOrPrompt, handlerApplyTextEdits} from './commands';
 import * as commands from './commands';
 import { ExtensionApi } from './extensionApi';
+import {activateDict} from './dict';
 
 export async function activate(context: coc.ExtensionContext): Promise<ExtensionApi> {
   // The server is implemented in node
@@ -118,6 +119,9 @@ export async function activate(context: coc.ExtensionContext): Promise<Extension
     updateSettings: () => false,
     cSpellClient: () => client,
   };
+
+  // activate default dicts
+  activateDict(server);
 
   return server;
 }

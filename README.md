@@ -77,6 +77,7 @@ Or use the [coc-actions](https://github.com/iamcco/coc-actions)
 
 ## Enabled File Types
 
+- vim
 - AsciiDoc
 - C, C++
 - C#

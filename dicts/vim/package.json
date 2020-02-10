@@ -1,0 +1,46 @@
+{
+  "name": "cspell-dict-vimlang",
+  "version": "1.0.1",
+  "description": "Vim Language dictionary for cspell.",
+  "bin": {
+    "cspell-dict-vimlang-link": "./link.js",
+    "cspell-dict-vimlang-unlink": "./unlink.js"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/cspell-tools compile \"vim.txt\" -o .",
+    "test": "head -n 100 \"vim.txt\" | cspell -v -c ./cspell-ext.json --local=* --languageId=vim stdin",
+    "cspell-link": "node link.js",
+    "cspell-unlink": "node unlink.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamcco/coc-spell-checker.git"
+  },
+  "keywords": [
+    "cspell",
+    "vimlang",
+    "vim script language",
+    "dictionary",
+    "spelling"
+  ],
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "author": "iamcco <ooiss@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/streetsidesoftware/cspell-dicts/issues"
+  },
+  "homepage": "https://github.com/iamcco/coc-spell-checker/packages/README.md",
+  "devDependcies": {
+    "cspell-tools": "*"
+  },
+  "dependencies": {
+    "configstore": "^5.0.0"
+  },
+  "files": [
+    "vim.txt.gz",
+    "cspell-ext.json",
+    "*.js",
+    "*.d.ts"
+  ]
+}

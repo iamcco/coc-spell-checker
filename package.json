@@ -9,7 +9,7 @@
     "multi-root ready"
   ],
   "license": "MIT",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "publisher": "iamcco",
   "repository": {
     "type": "git",
@@ -183,6 +183,7 @@
             "type": "string"
           },
           "default": [
+            "vim",
             "asciidoc",
             "c",
             "cpp",
@@ -494,6 +495,7 @@
     "rxjs": "^6.5.3",
     "vscode-jsonrpc": "^4.0.0",
     "vscode-languageserver": "^5.2.1",
-    "vscode-uri": "^2.1.1"
+    "vscode-uri": "^2.1.1",
+    "cspell-dict-vimlang": "^1.0.1"
   }
 }
