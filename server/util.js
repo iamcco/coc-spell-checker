@@ -18,10 +18,13 @@ function logInfo(msg, uri) {
     exports.logger.info(formatMessage(msg, uri));
 }
 exports.logInfo = logInfo;
+function logDebug(msg, uri) {
+    exports.logger.debug(formatMessage(msg, uri));
+}
+exports.logDebug = logDebug;
 function setWorkspaceBase(uri) {
     log(`setWorkspaceBase URI: ${uri}`);
     workspaceBase = uri;
-    log(`setWorkspaceBase: ${workspaceBase}`);
 }
 exports.setWorkspaceBase = setWorkspaceBase;
 function setWorkspaceFolders(folders) {

@@ -35,14 +35,13 @@ export declare class DocumentSettings {
     private fetchUriSettings;
     private findMatchingFolder;
     private fetchFolders;
-    private findMatchingFolderSettings;
     private _fetchVSCodeConfiguration;
     private fetchSettingsFromVSCode;
-    private _fetchSettingsForFolderUri;
+    private _fetchSettingsForUri;
     private matchingFoldersForUri;
     private createCache;
     private createLazy;
-    private resolveConfigImports;
+    private readSettingsForFolderUri;
 }
 export declare function isUriAllowed(uri: string, schemes?: string[]): boolean;
 export declare function isUriBlackListed(uri: string, schemes?: string[]): boolean;

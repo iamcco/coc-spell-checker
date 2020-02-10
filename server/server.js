@@ -45,7 +45,7 @@ function run() {
     // Create a simple text document manager. The text document manager
     // supports full document sync only
     const documents = new vscode_languageserver_1.TextDocuments();
-    connection.onInitialize((params, token) => {
+    connection.onInitialize((params) => {
         // Hook up the logger to the connection.
         util_1.log('onInitialize');
         util_1.setWorkspaceBase(params.rootUri ? params.rootUri : '');
@@ -67,7 +67,7 @@ function run() {
     });
     // The settings have changed. Is sent on server activation as well.
     connection.onDidChangeConfiguration(onConfigChange);
-    function onConfigChange(change) {
+    function onConfigChange(_change) {
         util_1.logInfo('Configuration Change');
         triggerUpdateConfig.next(undefined);
         updateLogLevel();
@@ -123,7 +123,7 @@ function run() {
             words: textToWords(text),
         };
     }
-    async function handleSpellingSuggestions(params) {
+    async function handleSpellingSuggestions(_params) {
         return {};
     }
     // Register API Handlers

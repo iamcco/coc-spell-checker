@@ -59,7 +59,7 @@ function onCodeActionHandler(documents, fnSettings, fnSettingsVersion, documentS
             action.kind = LangServer.CodeActionKind.QuickFix;
             return action;
         }
-        async function genCodeActionsForSuggestions(dictionary) {
+        async function genCodeActionsForSuggestions(_dictionary) {
             const spellCheckerDiags = diagnostics.filter(diag => diag.source === Validator.diagSource);
             let diagWord;
             for (const diag of spellCheckerDiags) {

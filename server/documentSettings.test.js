@@ -8,8 +8,8 @@ const vscode_uri_1 = require("vscode-uri");
 jest.mock('vscode-languageserver');
 jest.mock('./vscode.workspaceFolders');
 jest.mock('./util');
-const mock_getWorkspaceFolders = vscode_workspaceFolders_1.getWorkspaceFolders;
-const mock_getConfiguration = vscode_workspaceFolders_1.getConfiguration;
+const mockGetWorkspaceFolders = vscode_workspaceFolders_1.getWorkspaceFolders;
+const mockGetConfiguration = vscode_workspaceFolders_1.getConfiguration;
 const workspaceRoot = Path.resolve(Path.join(__dirname, '..'));
 const workspaceFolder = {
     uri: vscode_uri_1.URI.file(workspaceRoot).toString(),
@@ -18,7 +18,7 @@ const workspaceFolder = {
 describe('Validate DocumentSettings', () => {
     beforeEach(() => {
         // Clear all mock instances and calls to constructor and all methods:
-        mock_getWorkspaceFolders.mockClear();
+        mockGetWorkspaceFolders.mockClear();
     });
     test('version', () => {
         const docSettings = newDocumentSettings();
@@ -37,14 +37,14 @@ describe('Validate DocumentSettings', () => {
     });
     it('folders', async () => {
         const mockFolders = [workspaceFolder];
-        mock_getWorkspaceFolders.mockReturnValue(mockFolders);
+        mockGetWorkspaceFolders.mockReturnValue(mockFolders);
         const docSettings = newDocumentSettings();
         const folders = await docSettings.folders;
         expect(folders).toBe(mockFolders);
     });
     it('tests register config path', () => {
         const mockFolders = [workspaceFolder];
-        mock_getWorkspaceFolders.mockReturnValue(mockFolders);
+        mockGetWorkspaceFolders.mockReturnValue(mockFolders);
         const docSettings = newDocumentSettings();
         const configFile = Path.resolve(Path.join(__dirname, '..', '..', '..', 'cSpell.json'));
         expect(docSettings.version).toEqual(0);
@@ -54,8 +54,8 @@ describe('Validate DocumentSettings', () => {
     });
     it('test getSettings', async () => {
         const mockFolders = [workspaceFolder];
-        mock_getWorkspaceFolders.mockReturnValue(mockFolders);
-        mock_getConfiguration.mockReturnValue([{}, {}]);
+        mockGetWorkspaceFolders.mockReturnValue(mockFolders);
+        mockGetConfiguration.mockReturnValue([{}, {}]);
         const docSettings = newDocumentSettings();
         const configFile = Path.resolve(Path.join(__dirname, '..', 'sampleSourceFiles', 'cSpell.json'));
         docSettings.registerConfigurationFile(configFile);
@@ -66,8 +66,8 @@ describe('Validate DocumentSettings', () => {
     });
     it('test isExcluded', async () => {
         const mockFolders = [workspaceFolder];
-        mock_getWorkspaceFolders.mockReturnValue(mockFolders);
-        mock_getConfiguration.mockReturnValue([{}, {}]);
+        mockGetWorkspaceFolders.mockReturnValue(mockFolders);
+        mockGetConfiguration.mockReturnValue([{}, {}]);
         const docSettings = newDocumentSettings();
         const configFile = Path.resolve(Path.join(__dirname, '..', 'sampleSourceFiles', 'cSpell.json'));
         docSettings.registerConfigurationFile(configFile);
