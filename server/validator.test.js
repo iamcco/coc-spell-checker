@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Validator = require("./validator");
 const loremIpsum = require("lorem-ipsum");
 const cspell = require("cspell-lib");
+const vscode_uri_1 = require("vscode-uri");
 const cspell_lib_1 = require("cspell-lib");
+const vscode_languageserver_1 = require("vscode-languageserver");
 // cSpell:ignore brouwn jumpped lazzy wrongg mispelled ctrip nmove mischecked
 const defaultSettings = Object.assign(Object.assign({}, cspell_lib_1.getDefaultSettings()), { enabledLanguageIds: ['plaintext', 'javascript'] });
 function getSettings(text, languageId) {
@@ -44,20 +46,18 @@ describe('Validator', () => {
         const results = Validator.validateText(text, settings);
         return results.then(results => expect(results).toHaveLength(0));
     });
-    test('validates regex inclusions/exclusions', () => {
+    test('validates regex inclusions/exclusions', async () => {
         const text = sampleCode;
         const languageId = 'plaintext';
         const settings = Object.assign(Object.assign({}, getSettings(text, languageId)), { maxNumberOfProblems: 10 });
-        const results = Validator.validateText(text, settings);
-        return results.then(results => {
-            const words = results.map(wo => wo.text);
-            expect(words).toEqual(expect.arrayContaining(['wrongg']));
-            expect(words).toEqual(expect.arrayContaining(['mispelled']));
-            expect(words).toEqual(expect.not.arrayContaining(['xaccd']));
-            expect(words).toEqual(expect.not.arrayContaining(['ctrip']));
-            expect(words).toEqual(expect.not.arrayContaining(['FFEE']));
-            expect(words).toEqual(expect.not.arrayContaining(['nmove']));
-        });
+        const results = await Validator.validateText(text, settings);
+        const words = results.map(wo => wo.text);
+        expect(words).toEqual(expect.arrayContaining(['wrongg']));
+        expect(words).toEqual(expect.arrayContaining(['mispelled']));
+        expect(words).toEqual(expect.not.arrayContaining(['xaccd']));
+        expect(words).toEqual(expect.not.arrayContaining(['ctrip']));
+        expect(words).toEqual(expect.not.arrayContaining(['FFEE']));
+        expect(words).toEqual(expect.not.arrayContaining(['nmove']));
     });
     test('validates ignoreRegExpList', () => {
         const text = sampleCode;
@@ -88,6 +88,21 @@ describe('Validator', () => {
             expect(words).toEqual(expect.not.arrayContaining(['mispelled']));
             expect(words).toEqual(expect.arrayContaining(['mischecked']));
         });
+    });
+    test('validateTextDocument', async () => {
+        const text = sampleCode;
+        const languageId = 'plaintext';
+        const settings = Object.assign(Object.assign({}, getSettings(text, languageId)), { maxNumberOfProblems: 10 });
+        const uri = vscode_uri_1.URI.file(__filename).toString();
+        const textDoc = vscode_languageserver_1.TextDocument.create(uri, languageId, 1, text);
+        const results = await Validator.validateTextDocument(textDoc, settings);
+        const words = results.map(diag => diag.message);
+        expect(words).toEqual(expect.arrayContaining([expect.stringContaining('wrongg')]));
+        expect(words).toEqual(expect.arrayContaining([expect.stringContaining('mispelled')]));
+        expect(words).toEqual(expect.not.arrayContaining([expect.stringContaining('xaccd')]));
+        expect(words).toEqual(expect.not.arrayContaining([expect.stringContaining('ctrip')]));
+        expect(words).toEqual(expect.not.arrayContaining([expect.stringContaining('FFEE')]));
+        expect(words).toEqual(expect.not.arrayContaining([expect.stringContaining('nmove')]));
     });
 });
 const sampleCode = `

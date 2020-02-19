@@ -34,13 +34,17 @@ function onCodeActionHandler(documents, fnSettings, fnSettingsVersion, documentS
         const actions = [];
         const { context, textDocument: { uri } } = params;
         const { diagnostics } = context;
-        util_1.log(`CodeAction Only: ${context.only} Num: ${diagnostics.length}`, uri);
-        const optionalTextDocument = documents.get(uri);
-        if (!optionalTextDocument || !diagnostics.length)
+        const spellCheckerDiags = diagnostics.filter(diag => diag.source === Validator.diagSource);
+        if (!spellCheckerDiags.length)
             return [];
+        const optionalTextDocument = documents.get(uri);
+        if (!optionalTextDocument)
+            return [];
+        util_1.log(`CodeAction Only: ${context.only} Num: ${diagnostics.length}`, uri);
         const textDocument = optionalTextDocument;
         const { settings: docSetting, dictionary } = await getSettings(textDocument);
         if (!documentSettings_1.isUriAllowed(uri, docSetting.allowedSchemas)) {
+            util_1.log(`CodeAction Uri Not allowed: ${uri}`);
             return [];
         }
         const folders = await documentSettings.folders;
@@ -60,7 +64,7 @@ function onCodeActionHandler(documents, fnSettings, fnSettingsVersion, documentS
             return action;
         }
         async function genCodeActionsForSuggestions(_dictionary) {
-            const spellCheckerDiags = diagnostics.filter(diag => diag.source === Validator.diagSource);
+            util_1.log('CodeAction generate suggestions');
             let diagWord;
             for (const diag of spellCheckerDiags) {
                 const word = extractText(textDocument, diag.range);

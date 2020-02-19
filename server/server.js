@@ -192,7 +192,8 @@ function run() {
                 if (settingsToUse.enabled) {
                     util_1.logInfo('Validate File', uri);
                     util_1.log(`validateTextDocument start: v${doc.version}`, uri);
-                    const diagnostics = await Validator.validateTextDocument(doc, settingsToUse);
+                    const settings = documentSettings_1.correctBadSettings(settingsToUse);
+                    const diagnostics = await Validator.validateTextDocument(doc, settings);
                     util_1.log(`validateTextDocument done: v${doc.version}`, uri);
                     return { uri, diagnostics };
                 }

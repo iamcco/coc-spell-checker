@@ -9,7 +9,7 @@
     "multi-root ready"
   ],
   "license": "MIT",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "iamcco",
   "repository": {
     "type": "git",
@@ -111,19 +111,19 @@
     "jsonValidation": [
       {
         "fileMatch": "cSpell.json",
-        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json"
+        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json"
       },
       {
         "fileMatch": "cspell.json",
-        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json"
+        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json"
       },
       {
         "fileMatch": "cspell-default.json",
-        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json"
+        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json"
       },
       {
         "fileMatch": "cspell-ext.json",
-        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json"
+        "url": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json"
       }
     ],
     "configuration": {
@@ -313,18 +313,16 @@
           "scope": "resource",
           "items": {
             "type": "object",
-            "items": [
-              {
-                "id": "name",
+            "properties": {
+              "name": {
                 "type": "string",
                 "description": "The pattern identifier."
               },
-              {
-                "id": "pattern",
+              "pattern": {
                 "type": "string",
                 "description": "Regular expression, default flags are: 'gim'"
               }
-            ],
+            },
             "description": "Define a pattern"
           },
           "default": [],
@@ -359,33 +357,7 @@
           "scope": "resource",
           "description": "Define settings on a per programming language basis.",
           "items": {
-            "type": "object",
-            "items": [
-              {
-                "id": "languageId",
-                "type": "string",
-                "description": "Language Id to apply settings, examples \"*\", \"php\", \"cpp\" "
-              },
-              {
-                "id": "local",
-                "type": "string",
-                "description": "Optional: Spoken language local used to select dictionary, example: \"en\", \"en-US\" or \"en-GB\" "
-              },
-              {
-                "id": "allowCompoundWords",
-                "type": "boolean",
-                "description": "Enable / Disable word compounds for a given programming language."
-              },
-              {
-                "id": "dictionaries",
-                "type": "array",
-                "description": "Add dictionaries to be used in spell checking",
-                "items": {
-                  "type": "string",
-                  "description": "name of dictionary to use"
-                }
-              }
-            ]
+            "$ref": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json#/definitions/LanguageSetting"
           }
         },
         "cSpell.dictionaries": {
@@ -403,18 +375,16 @@
           "description": "A List of Dictionary Definitions.",
           "items": {
             "type": "object",
-            "items": [
-              {
-                "id": "name",
+            "properties": {
+              "name": {
                 "type": "string",
                 "description": "Name of dictionary"
               },
-              {
-                "id": "path",
+              "path": {
                 "type": "string",
                 "description": "Path to the dictionary file. Relative paths will be relative to the workspace."
               }
-            ],
+            },
             "required": [
               "name",
               "path"
@@ -457,6 +427,13 @@
             "file",
             "untitled"
           ]
+        },
+        "cSpell.overrides": {
+          "type": "array",
+          "description": "Overrides to apply based upon the file path.",
+          "items": {
+            "$ref": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json#/definitions/OverrideSettings"
+          }
         }
       }
     }
@@ -470,29 +447,29 @@
   },
   "devDependencies": {
     "@types/comment-json": "^1.1.1",
-    "@types/fs-extra": "^8.0.1",
-    "@types/node": "^11.15.2",
+    "@types/fs-extra": "^8.1.0",
+    "@types/node": "^12.12.27",
     "coc.nvim": "^0.0.74",
     "lorem-ipsum": "^1.0.6",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.2",
     "ts-loader": "^6.2.1",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.2",
+    "typescript": "^3.7.5",
     "vscode-languageserver-protocol": "^3.14.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "comment-json": "^1.1.3",
-    "cspell-glob": "^0.1.12",
-    "cspell-lib": "^4.1.3",
+    "cspell-glob": "^0.1.17",
+    "cspell-lib": "^4.1.16",
     "fs-extra": "^8.1.0",
-    "gensequence": "^2.1.3",
+    "gensequence": "^2.3.0",
     "iconv-lite": "^0.4.24",
     "micromatch": "^4.0.2",
     "minimatch": "^3.0.4",
     "node-watch": "^0.6.3",
-    "rxjs": "^6.5.3",
+    "rxjs": "^6.5.4",
     "vscode-jsonrpc": "^4.0.0",
     "vscode-languageserver": "^5.2.1",
     "vscode-uri": "^2.1.1",

@@ -4,7 +4,7 @@ export interface SpellCheckerSettings {
     checkLimit?: number;
     diagnosticLevel?: string;
     allowedSchemas?: string[];
-    logLevel?: "None" | "Error" | "Warning" | "Information" | "Debug";
+    logLevel?: 'None' | 'Error' | 'Warning' | 'Information' | 'Debug';
     showStatus?: boolean;
     spellCheckDelayMs?: number;
     showCommandsInEditorContextMenu?: boolean;

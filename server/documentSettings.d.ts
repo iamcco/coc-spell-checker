@@ -1,6 +1,6 @@
-import { Connection, TextDocumentUri } from './vscode.workspaceFolders';
-import * as vscode from './vscode.workspaceFolders';
-import { ExcludeFilesGlobMap } from 'cspell-lib';
+import { Connection, TextDocumentUri } from './vscode.config';
+import * as vscode from 'vscode-languageserver';
+import { ExcludeFilesGlobMap, RegExpPatternDefinition, Pattern } from 'cspell-lib';
 import { CSpellUserSettings } from './cspellConfig';
 import { AutoLoadCache } from './autoLoad';
 export interface SettingsCspell {
@@ -43,6 +43,16 @@ export declare class DocumentSettings {
     private createLazy;
     private readSettingsForFolderUri;
 }
+declare function resolvePath(...parts: string[]): string;
 export declare function isUriAllowed(uri: string, schemes?: string[]): boolean;
 export declare function isUriBlackListed(uri: string, schemes?: string[]): boolean;
 export declare function doesUriMatchAnyScheme(uri: string, schemes: string[]): boolean;
+declare function fixRegEx(pat: Pattern): Pattern;
+declare function fixPattern(pat: RegExpPatternDefinition): RegExpPatternDefinition;
+export declare function correctBadSettings(settings: CSpellUserSettings): CSpellUserSettings;
+export declare const debugExports: {
+    fixRegEx: typeof fixRegEx;
+    fixPattern: typeof fixPattern;
+    resolvePath: typeof resolvePath;
+};
+export {};

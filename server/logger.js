@@ -21,7 +21,6 @@ const stub = () => { };
 class Logger {
     constructor(logLevel = LogLevel.DEBUG, connection) {
         this.logLevel = logLevel;
-        this.connection = connection;
         this.seq = 0;
         this.logs = [];
         this.loggers = {
@@ -31,6 +30,9 @@ class Logger {
             [LogLevel.INFO]: stub,
             [LogLevel.DEBUG]: stub,
         };
+        if (connection) {
+            this.setConnection(connection);
+        }
     }
     writeLog(entry) {
         if (!this.connection) {

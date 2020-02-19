@@ -1,7 +1,7 @@
 # Spelling Checker for (Neo)vim
 
-> fork from [vscode-spell-checker](https://github.com/streetsidesoftware/vscode-spell-checker)
-and [commit](c839c736bf8b2ba4e412a65afae50a52caa1dd7b)
+> fork from [vscode-spell-checker](https://github.com/streetsidesoftware/vscode-spell-checker) v1.7.24
+and [commit](https://github.com/streetsidesoftware/vscode-spell-checker/commit/f9c2a9eabf3bc41f19d2d0216472afd003fa65bb)
 
 A basic spell checker that works well with camelCase code.
 

@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const documentSettings_1 = require("./documentSettings");
-const vscode_workspaceFolders_1 = require("./vscode.workspaceFolders");
+const vscode_config_1 = require("./vscode.config");
 const Path = require("path");
 const vscode_uri_1 = require("vscode-uri");
-// import * as vscode from './vscode.workspaceFolders';
+const cspell = require("cspell-lib");
+const os = require("os");
 jest.mock('vscode-languageserver');
-jest.mock('./vscode.workspaceFolders');
+jest.mock('./vscode.config');
 jest.mock('./util');
-const mockGetWorkspaceFolders = vscode_workspaceFolders_1.getWorkspaceFolders;
-const mockGetConfiguration = vscode_workspaceFolders_1.getConfiguration;
+const mockGetWorkspaceFolders = vscode_config_1.getWorkspaceFolders;
+const mockGetConfiguration = vscode_config_1.getConfiguration;
 const workspaceRoot = Path.resolve(Path.join(__dirname, '..'));
 const workspaceFolder = {
     uri: vscode_uri_1.URI.file(workspaceRoot).toString(),
@@ -74,8 +75,65 @@ describe('Validate DocumentSettings', () => {
         const result = await docSettings.isExcluded(vscode_uri_1.URI.file(__filename).toString());
         expect(result).toBe(false);
     });
+    test('resolvePath', () => {
+        expect(documentSettings_1.debugExports.resolvePath(__dirname)).toBe(__dirname);
+        expect(documentSettings_1.debugExports.resolvePath('~')).toBe(os.homedir());
+    });
     function newDocumentSettings() {
         return new documentSettings_1.DocumentSettings({}, {});
     }
+});
+describe('Validate RegExp corrections', () => {
+    test('fixRegEx', () => {
+        var _a, _b;
+        const defaultSettings = cspell.getDefaultSettings();
+        // Make sure it doesn't change the defaults.
+        expect((_a = defaultSettings.patterns) === null || _a === void 0 ? void 0 : _a.map(p => p.pattern).map(documentSettings_1.debugExports.fixRegEx))
+            .toEqual((_b = defaultSettings.patterns) === null || _b === void 0 ? void 0 : _b.map(p => p.pattern));
+        const sampleRegEx = [
+            '/#.*/',
+            '/"""(.*?\\n?)+?"""/g',
+            '/\'\'\'(.*?\\n?)+?\'\'\'/g',
+            'strings',
+        ];
+        const expectedRegEx = [
+            '/#.*/',
+            '/(""")[^\\1]*?\\1/g',
+            "/(''')[^\\1]*?\\1/g",
+            'strings',
+        ];
+        expect(sampleRegEx.map(documentSettings_1.debugExports.fixRegEx)).toEqual(expectedRegEx);
+    });
+    test('fixPattern', () => {
+        var _a;
+        const defaultSettings = cspell.getDefaultSettings();
+        // Make sure it doesn't change the defaults.
+        expect((_a = defaultSettings.patterns) === null || _a === void 0 ? void 0 : _a.map(documentSettings_1.debugExports.fixPattern))
+            .toEqual(defaultSettings.patterns);
+    });
+    test('fixPattern', () => {
+        const defaultSettings = cspell.getDefaultSettings();
+        // Make sure it doesn't change the defaults.
+        expect(documentSettings_1.correctBadSettings(defaultSettings))
+            .toEqual(defaultSettings);
+        const settings = {
+            patterns: [
+                {
+                    name: 'strings',
+                    pattern: '/"""(.*?\\n?)+?"""/g',
+                }
+            ]
+        };
+        const expectedSettings = {
+            patterns: [
+                {
+                    name: 'strings',
+                    pattern: '/(""")[^\\1]*?\\1/g',
+                }
+            ]
+        };
+        expect(documentSettings_1.correctBadSettings(settings)).toEqual(expectedSettings);
+        expect(documentSettings_1.correctBadSettings(settings)).not.toEqual(settings);
+    });
 });
 //# sourceMappingURL=documentSettings.test.js.map

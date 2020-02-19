@@ -11,7 +11,8 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const vscode = require("./vscode.workspaceFolders");
+// cSpell:ignore pycache
+const vscode_config_1 = require("./vscode.config");
 const path = require("path");
 const fs = require("fs-extra");
 const CSpell = require("cspell-lib");
@@ -59,7 +60,7 @@ class DocumentSettings {
         return settings.globMatcher.match(vscode_uri_1.URI.parse(uri).path);
     }
     resetSettings() {
-        util_1.log(`resetSettings`);
+        util_1.log('resetSettings');
         CSpell.clearCachedSettings();
         this.cachedValues.forEach(cache => cache.clear());
         this._version += 1;
@@ -68,7 +69,7 @@ class DocumentSettings {
         return this._folders();
     }
     _importSettings() {
-        util_1.log(`importSettings`);
+        util_1.log('importSettings');
         const importPaths = [...this.configsToImport.keys()].sort();
         return readSettingsFiles(importPaths);
     }
@@ -95,10 +96,10 @@ class DocumentSettings {
         return (await this.matchingFoldersForUri(docUri))[0] || { uri: root.toString(), name: 'root' };
     }
     async fetchFolders() {
-        return (await vscode.getWorkspaceFolders(this.connection)) || [];
+        return (await vscode_config_1.getWorkspaceFolders(this.connection)) || [];
     }
     async _fetchVSCodeConfiguration(uri) {
-        return (await vscode.getConfiguration(this.connection, [
+        return (await vscode_config_1.getConfiguration(this.connection, [
             { scopeUri: uri || undefined, section: cSpellSection },
             { section: 'search' }
         ])).map(v => v || {});
@@ -165,7 +166,7 @@ function configPathsForRoot(workspaceRootUri) {
     return paths;
 }
 function resolveConfigImports(config, folderUri) {
-    util_1.log(`resolveConfigImports:`, folderUri);
+    util_1.log('resolveConfigImports:', folderUri);
     const uriFsPath = vscode_uri_1.URI.parse(folderUri).fsPath;
     const imports = typeof config.import === 'string' ? [config.import] : config.import || [];
     const importAbsPath = imports.map(file => resolvePath(uriFsPath, file));
@@ -180,9 +181,9 @@ function _readSettingsForFolderUri(folderUri) {
     return folderUri ? readSettingsFiles(configPathsForRoot(folderUri)) : {};
 }
 function readSettingsFiles(paths) {
-    util_1.log(`readSettingsFiles:`, paths);
+    util_1.log('readSettingsFiles:', paths);
     const existingPaths = paths.filter(filename => exists(filename));
-    util_1.log(`readSettingsFiles actual:`, existingPaths);
+    util_1.log('readSettingsFiles actual:', existingPaths);
     return existingPaths.length ? CSpell.readSettingsFiles(existingPaths) : {};
 }
 function exists(file) {
@@ -211,4 +212,36 @@ function doesUriMatchAnyScheme(uri, schemes) {
     return schemes.findIndex(v => v === schema) >= 0;
 }
 exports.doesUriMatchAnyScheme = doesUriMatchAnyScheme;
+const correctRegExMap = new Map([
+    ['/"""(.*?\\n?)+?"""/g', '/(""")[^\\1]*?\\1/g'],
+    ["/'''(.*?\\n?)+?'''/g", "/(''')[^\\1]*?\\1/g"],
+]);
+function fixRegEx(pat) {
+    if (typeof pat != 'string') {
+        return pat;
+    }
+    return correctRegExMap.get(pat) || pat;
+}
+function fixPattern(pat) {
+    const pattern = fixRegEx(pat.pattern);
+    if (pattern === pat.pattern) {
+        return pat;
+    }
+    return Object.assign(Object.assign({}, pat), { pattern });
+}
+function correctBadSettings(settings) {
+    var _a, _b, _c, _d, _e, _f;
+    const newSettings = Object.assign({}, settings);
+    // Fix patterns
+    newSettings.patterns = (_b = (_a = newSettings) === null || _a === void 0 ? void 0 : _a.patterns) === null || _b === void 0 ? void 0 : _b.map(fixPattern);
+    newSettings.ignoreRegExpList = (_d = (_c = newSettings) === null || _c === void 0 ? void 0 : _c.ignoreRegExpList) === null || _d === void 0 ? void 0 : _d.map(fixRegEx);
+    newSettings.includeRegExpList = (_f = (_e = newSettings) === null || _e === void 0 ? void 0 : _e.includeRegExpList) === null || _f === void 0 ? void 0 : _f.map(fixRegEx);
+    return newSettings;
+}
+exports.correctBadSettings = correctBadSettings;
+exports.debugExports = {
+    fixRegEx,
+    fixPattern,
+    resolvePath,
+};
 //# sourceMappingURL=documentSettings.js.map
