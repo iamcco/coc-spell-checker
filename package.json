@@ -441,9 +441,11 @@
   "scripts": {
     "clean": "rm -rf ./out",
     "clean:server": "rm -rf ./server",
+    "clean:all": "npm-run-all clean:server clean",
     "build": "webpack",
     "build:server": "git clone https://github.com/streetsidesoftware/vscode-spell-checker && cd vscode-spell-checker/packages/_server && yarn && yarn compile && mv ../client/server ../../../ && cd ../../../ && rm -rf vscode-spell-checker",
-    "prepublishOnly": "npm-run-all clean clean:server build build:server",
+    "build:all": "npm-run-all build:server build",
+    "prepublishOnly": "npm-run-all clean:all build:all",
     "prepare": "npm-run-all clean build"
   },
   "devDependencies": {
