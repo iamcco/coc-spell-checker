@@ -190,6 +190,7 @@
             "csharp",
             "css",
             "git-commit",
+            "gitcommit",
             "go",
             "handlebars",
             "haskell",
