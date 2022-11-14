@@ -7,3 +7,4 @@ temp
 *.vsix
 *.cpuprofile
 server/*.js.map
+.DS_Store

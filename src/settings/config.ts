@@ -140,13 +140,21 @@ export function inspectSettingFromVSConfig<K extends keyof CSpellUserSettings>(
     resource: Uri | null,
 ): Inspect<CSpellUserSettings[K]> {
     const config = inspectConfig(resource);
-    const { defaultValue = {}, globalValue = {}, workspaceValue = {}, workspaceFolderValue = {} } = config;
+    const { defaultValue = {}, globalValue = {}, workspaceValue, workspaceFolderValue  } = config;
     return {
         key: config.key + '.' + subSection,
         defaultValue: defaultValue[subSection],
         globalValue: globalValue[subSection],
-        workspaceValue: workspaceValue[subSection],
-        workspaceFolderValue: workspaceFolderValue[subSection],
+        workspaceValue: workspaceValue
+          ? workspaceValue[subSection]
+          : workspaceFolderValue
+          ? workspaceFolderValue[subSection]
+          : undefined,
+        workspaceFolderValue: workspaceFolderValue
+          ? workspaceFolderValue[subSection]
+          : workspaceValue
+          ? workspaceValue[subSection]
+          : undefined,
     };
 }
 
@@ -231,7 +239,7 @@ function normalizeScope(scope: InspectScope): FullInspectScope {
     if (isFullInspectScope(scope)) {
         return {
             scope: scope.scope,
-            resource: scope.scope === Scopes.Folder ? normalizeResourceUri(scope.resource) : null,
+            resource: scope.scope === Scopes.Folder || scope.scope === Scopes.Workspace ? normalizeResourceUri(scope.resource) : null,
         };
     }
     return { scope, resource: null };
