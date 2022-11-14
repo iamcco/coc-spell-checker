@@ -164,7 +164,7 @@ export function userCommandOnCurrentSelectionOrPrompt(
   return async function () {
     const document = await coc.workspace.document;
     const mode = await coc.workspace.nvim.call('visualmode') as string;
-    let range = await coc.workspace.getSelectedRange(mode, document);
+    let range = mode ? await coc.workspace.getSelectedRange(mode, document) : null;
     let value = range ? document.textDocument.getText(range) : '';
     if (range && !(range.start.line !== range.end.line || range.start.character !== range.end.character)) {
       fnAction(value, coc.Uri.parse(document.textDocument.uri));
