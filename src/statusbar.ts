@@ -6,15 +6,16 @@ import { CSpellClient } from './client';
 import { isSupportedDoc } from './util';
 
 export function initStatusBar(context: coc.ExtensionContext, client: CSpellClient) {
+  const statusText = coc.workspace.getConfiguration('cSpell').get('status-bar-text', 'cSpell');
 
-  const sbCheck = coc.workspace.createStatusBarItem(0, { progress: true });
-  sbCheck.text = 'cSpell';
+  const sbCheck = coc.workspace.createStatusBarItem(999, { progress: true });
+  sbCheck.text = statusText;
   sbCheck.show();
 
   function updateStatusBarWithSpellCheckStatus(document?: TextDocument) {
     if (!document) return;
 
-    sbCheck.text = 'cSpell';
+    sbCheck.text = statusText;
     sbCheck.isProgress = true;
     sbCheck.show();
 

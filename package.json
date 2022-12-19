@@ -435,6 +435,11 @@
           "items": {
             "$ref": "https://raw.githubusercontent.com/streetsidesoftware/cspell/cspell%404.0.47/cspell.schema.json#/definitions/OverrideSettings"
           }
+        },
+        "cSpell.status-bar-text": {
+          "type": "string",
+          "description": "Text show in status bar, default cSpell",
+          "default": "cSpell"
         }
       }
     }
