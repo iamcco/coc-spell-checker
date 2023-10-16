@@ -8,7 +8,7 @@ import { isSupportedDoc } from './util';
 export function initStatusBar(context: coc.ExtensionContext, client: CSpellClient) {
   const statusText = coc.workspace.getConfiguration('cSpell').get('status-bar-text', 'cSpell');
 
-  const sbCheck = coc.workspace.createStatusBarItem(999, { progress: true });
+  const sbCheck = coc.window.createStatusBarItem(999, { progress: true });
   sbCheck.text = statusText;
   sbCheck.show();
 
